@@ -16,6 +16,14 @@ class Board
     populate_board(difficulty)
   end
   
+  def display
+    @rows.reverse.each do |row|
+      puts row.map { |tile| tile.render }.join(' ')
+    end
+  end
+  
+  private
+  
   def generate_board(difficulty)
     Array.new(@grid_size) { Array.new(@grid_size) { nil } }
   end

@@ -18,7 +18,17 @@ class Tile
     @revealed, @flagged = false, false
   end
   
-  
+  def render
+    if @flagged
+      'F'
+    elsif !@revealed
+      '_'
+    elsif @bombed
+      'B'
+    else
+      bombed_neighbors
+    end
+  end
   
   def toggle_flag
     @flagged ? @flagged = :false : @flagged = true
