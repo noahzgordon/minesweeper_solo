@@ -18,9 +18,7 @@ class Tile
     @revealed, @flagged = false, false
   end
   
-  def place_bomb
-    @bombed = true
-  end
+  
   
   def toggle_flag
     @flagged ? @flagged = :false : @flagged = true
