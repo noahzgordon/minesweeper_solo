@@ -22,9 +22,11 @@ class Tile
     if @flagged
       'F'
     elsif !@revealed
-      '_'
+      '*'
     elsif @bombed
       'B'
+    elsif @bombed_neights == 0
+      '_'
     else
       bombed_neighbors
     end
@@ -35,13 +37,13 @@ class Tile
   end
   
   def reveal
-    if bombed_neighbors == 0 && !bombed
+    @revealed = true
+    
+    if bombed_neighbors == 0 && bombed == false
       neighbors.each do |neighbor| 
         neighbor.reveal unless neighbor.flagged || neighbor.revealed
       end
     end
-    
-    @revealed = true
   end
   
   def neighbors

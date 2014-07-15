@@ -20,9 +20,9 @@ class Board
     @rows.reverse.each do |row|
       puts row.map { |tile| tile.render }.join(' ')
     end
+    
+    nil
   end
-  
-  private
   
   def generate_board(difficulty)
     Array.new(@grid_size) { Array.new(@grid_size) { nil } }
@@ -49,10 +49,10 @@ class Board
   
   def at(pos)
     # intended to return the position as if it were a regular x/y grid
-    @rows.reverse[pos[1]][pos[0]]
+    @rows[pos[1]][pos[0]]
   end
   
   def set(pos, tile)
-    @rows.reverse[pos[1]][pos[0]] = tile
+    @rows[pos[1]][pos[0]] = tile
   end
 end
