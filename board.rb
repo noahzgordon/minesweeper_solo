@@ -10,7 +10,7 @@ class Board
   
   attr_reader :rows, :grid_size
   
-  def initialize(difficulty = :easy)
+  def initialize(difficulty)
     @grid_size = DIFF_CONVERSIONS[difficulty][:size]
     @rows = self.generate_board(difficulty)
     populate_board(difficulty)
