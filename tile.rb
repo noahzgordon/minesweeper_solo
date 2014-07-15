@@ -37,11 +37,18 @@ class Tile
   end
   
   def neighbors
+    neighbors = NEIGHBOR_DELTAS.map do |delta| 
+      [@position[0] + delta[0], @position[1] + delta[1]] 
+    end
     
+    neighbors.reject do |pos| 
+      pos.any? { |coord| coord < 0 || coord >= board.rows.length } 
+    end
+    
+    neighbors
   end
   
   def bombed_neighbors
-    
+    neighbors.count { |neighbor| neighbor.bombed }
   end
-  
 end
