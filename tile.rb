@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class Tile
   
   NEIGHBOR_DELTAS = [
@@ -20,12 +22,12 @@ class Tile
   
   def render
     if @flagged
-      'F'
+      '⚑'
     elsif !@revealed
-      '*'
+      '▧'
     elsif @bombed
-      'B'
-    elsif @bombed_neights == 0
+      '✹'
+    elsif @bombed_neighbors == 0
       '_'
     else
       bombed_neighbors
@@ -55,7 +57,7 @@ class Tile
       pos.any? { |coord| coord < 0 || coord >= board.grid_size } 
     end
     
-    neighbor_positions.map { |pos| board.at(pos) }
+    neighbor_positions.map { |pos| board[pos] }
   end
   
   def bombed_neighbors

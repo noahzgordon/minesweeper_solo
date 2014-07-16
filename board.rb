@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require './tile.rb'
 
 class Board
@@ -10,16 +12,19 @@ class Board
   
   attr_reader :rows, :grid_size
   
-  def initialize(difficulty)
+  def initialize(difficulty = :easy)
     @grid_size = DIFF_CONVERSIONS[difficulty][:size]
     @rows = self.generate_board(difficulty)
     populate_board(difficulty)
   end
   
   def display
+    puts '┌' + '───┬' * (@grid_size - 1) + '───┐'
     @rows.reverse.each do |row|
-      puts row.map { |tile| tile.render }.join(' ')
+      puts '│ ' + row.map { |tile| tile.render }.join(' │ ') + ' │'
+      puts '├─' + ('──┼─' * (@grid_size - 1)) + '──┤' unless row == @rows[0]
     end
+    puts '└' + '───┴' * (@grid_size - 1) + '───┘'
     
     nil
   end
@@ -47,7 +52,7 @@ class Board
     end
   end
   
-  def at(pos)
+  def [](pos)
     # intended to return the position as if it were a regular x/y grid
     @rows[pos[1]][pos[0]]
   end

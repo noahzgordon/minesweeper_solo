@@ -16,10 +16,11 @@ class Minesweeper
   end
   
   def play
+    @board.display
     
     until won? || lost?
       
-      command, pos = get_input
+      command, pos = get_input[0], get_input[1]
       
       case command
       when "click"
@@ -40,19 +41,26 @@ class Minesweeper
   end
   
   def get_input
-    puts "Please type in your command (e.g. 'click 2,3')."
-    input = gets.chomp
+    puts "Please type in your command."
+    command = gets.chomp.downcase
     
-    input.split(' ')
-    input[1].split(',').map { |num| num.to_i } if input.count > 1
+    if command == "save"
+      self.save
+      return nil
+    end
+    
+    puts "Please input coordinates."
+    coords = gets.chomp.split(',').map { |num| num.to_i - 1 }
+    
+    [command, coords]
   end
   
   def click(pos)
-    @board.at(pos).reveal
+    @board[pos].reveal
   end
   
   def flag(pos)
-    @board.at(pos).toggle_flag
+    @board[pos].toggle_flag
   end
   
   def won?
@@ -70,5 +78,5 @@ class Minesweeper
   def command_list
     puts "The command you entered is invaid."
     puts "Valid commands include: 'click', 'flag', and 'save'."
-  
+  end
 end
