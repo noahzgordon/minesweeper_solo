@@ -3,12 +3,13 @@ require 'yaml'
 
 class Minesweeper
   
-  def self.save
-    
+  def self.save(filename)
+    File.write("#{filename}.yml", YAML.dump(self))
   end
   
-  def self.load
-    
+  def self.load(filename)
+    game = File.read("./#{filename}.yml")
+    YAML.parse(game)
   end
   
   def initialize(difficulty = :easy)
@@ -20,7 +21,7 @@ class Minesweeper
     
     until won? || lost?
       
-      command, pos = get_input[0], get_input[1]
+      command, pos = get_input
       
       case command
       when "click"
@@ -80,3 +81,24 @@ class Minesweeper
     puts "Valid commands include: 'click', 'flag', and 'save'."
   end
 end
+
+if __FILE__ == $PROGRAM_NAME
+  puts "Would you like to LOAD a previous game or start a NEW game?"
+  input = gets.chomp.downcase
+  
+  if input == 'new'
+    puts "Choose a difficulty: EASY, MEDIUM, or HARD."
+    diff = gets.chomp.downcase
+    
+    Minesweeper.new(diff.to_sym).play
+  elsif input == 'load'
+    puts "What is the name of your save file?"
+    filename = gets.chomp.downcase
+    
+    Minesweeper.load(filename).play
+  end
+end
+    
+  
+  
+  
