@@ -3,12 +3,8 @@ require 'yaml'
 
 class Minesweeper
   
-  def self.save(filename)
-    File.write("#{filename}.yml", YAML.dump(self))
-  end
-  
   def self.load(filename)
-    game = File.read("./#{filename}.yml")
+    game = File.read("#{filename}.yml")
     YAML.parse(game)
   end
   
@@ -23,6 +19,7 @@ class Minesweeper
       
       command, pos = get_input
       
+      # need to add rescues for invalid commands
       case command
       when "click"
         click(pos)
@@ -31,6 +28,7 @@ class Minesweeper
       when "save"
         self.save
       else
+        # ERROR: still calling this on saves
         command_list
       end
       
@@ -46,7 +44,12 @@ class Minesweeper
     command = gets.chomp.downcase
     
     if command == "save"
-      self.save
+      puts "What would you like to call your save file?"
+      filename = gets.chomp.downcase
+      
+      save(filename)
+      puts "Saved successfully!"
+      
       return nil
     end
     
@@ -80,6 +83,11 @@ class Minesweeper
     puts "The command you entered is invaid."
     puts "Valid commands include: 'click', 'flag', and 'save'."
   end
+  
+  def save(filename)
+    # Add an overwrite file message?
+    File.write("#{filename}.yml", YAML.dump(self))
+  end
 end
 
 if __FILE__ == $PROGRAM_NAME
@@ -95,7 +103,7 @@ if __FILE__ == $PROGRAM_NAME
     puts "What is the name of your save file?"
     filename = gets.chomp.downcase
     
-    Minesweeper.load(filename).play
+    YAML.load_file("#{filename}.yml").play
   end
 end
     

@@ -22,20 +22,20 @@ class Tile
   
   def render
     if @flagged
-      '⚑'
+      '🏁'
     elsif !@revealed
       '▧'
     elsif @bombed
-      '✹'
-    elsif @bombed_neighbors == 0
-      '_'
+      '💣'
+    elsif bombed_neighbors == 0
+      ' '
     else
       bombed_neighbors
     end
   end
   
   def toggle_flag
-    @flagged ? @flagged = :false : @flagged = true
+    @flagged ? @flagged = false : @flagged = true
   end
   
   def reveal
