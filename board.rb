@@ -19,9 +19,15 @@ class Board
   end
   
   def display
+    num_line = '  '
+    1.upto(grid_size) do |num|
+      num < 9 ? num_line += num.to_s + '   ' : num_line += num.to_s + '  '
+    end
+    
+    puts num_line
     puts '┌' + '───┬' * (@grid_size - 1) + '───┐'
-    @rows.reverse.each do |row|
-      puts '│ ' + row.map { |tile| tile.render }.join(' │ ') + ' │'
+    @rows.reverse.each_with_index do |row, i|
+      puts '│ ' + row.map { |tile| tile.render }.join(' │ ') + ' │' + "  #{@grid_size - i}"
       puts '├─' + ('──┼─' * (@grid_size - 1)) + '──┤' unless row == @rows[0]
     end
     puts '└' + '───┴' * (@grid_size - 1) + '───┘'
